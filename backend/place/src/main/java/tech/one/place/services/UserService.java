@@ -28,39 +28,51 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepo;
-    @Autowired
-    private SeatRepository seatRepository;
-    @Autowired
-    private RoomRepository roomRepository;
-    @Autowired
-    private ReservationRepository reservationRepository;
+
     @Autowired
     public UserService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
-    public String CreateUserInfo(User user) {
+    public String CreateUserInfo(User user){
         userRepo.save(user);
         return "User Created Successfully ";
+
     }
-    public String UpdateUserInfo(User user) {
-        userRepo.save(user);
-        return "User Updated Successfully ";
+    public User register(User registerUser) {
+        if (userRepo.existsByEmail(registerUser.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+
+
+
+        User user = new User();
+
+        user.setPassword(registerUser.getPassword());
+        user.setFirstName(registerUser.getFirstName());
+        user.setLastName(registerUser.getLastName());
+        user.setEmail(registerUser.getEmail());
+        user.setType(registerUser.getType());
+
+        user.setVerified(false);
+
+
+
+        User registeredUser = userRepo.save(user);
+
+
+
+        return registeredUser;
     }
-    public String DeleteUserInfo(User user) {
-        userRepo.delete(user);
-        return "User Deleted Successfully ";
-    }
-    public User getUserById(Long id) {
-        return userRepo.findById(id).orElse(null);
-    }
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
-    }
-    public User getUserByUsername(String username) {
-        return userRepo.findByUsername(username);
-    }
-    public User getUserByEmail(String email) {
-        return userRepo.findByEmail(email);
+    public User UpdateUserInfo(long userID , User user){
+        User existingUser = userRepo.findById(userID).get() ;
+
+        existingUser.setEmail(user.getEmail());
+        existingUser.setType(user.getType());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        return userRepo.save(existingUser) ;
     }
 
 

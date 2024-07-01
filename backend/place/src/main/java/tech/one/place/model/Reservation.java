@@ -15,8 +15,8 @@ public class Reservation implements Serializable {
     @GeneratedValue( strategy = GenerationType.AUTO)
     private long id;
     private long idSeat;
-    @Id
+
     private long idUser;
-    @Id
+
     private Date date;
 }

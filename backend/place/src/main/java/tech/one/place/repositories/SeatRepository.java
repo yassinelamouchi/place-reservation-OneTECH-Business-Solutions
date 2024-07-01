@@ -5,8 +5,7 @@ import tech.one.place.model.Seat;
 
 
 public interface SeatRepository extends JpaRepository<Seat, Long> {
-    Seat findBySeatUserId(int seatNumber);
-    Seat findBySeatUserIdAndRoomId(int seatNumber, int roomId);
+
 
 
 }
