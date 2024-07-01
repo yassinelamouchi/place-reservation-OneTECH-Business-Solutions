@@ -53,31 +53,42 @@ public class UserController {
 
 
     }
-    @PutMapping("/{userID}")
-    public ResponseEntity<Object> updateUserDetails(
-            @PathVariable("userID") int userID,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
 
-            @RequestParam(required = false) Boolean verified) throws IOException, ParseException {
-
-        User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setVerified(true);
-
-        System.out.println(user);
-
-        User newuser =this.userService.UpdateUserInfo(userID,user);
+    @GetMapping("/{UserID}")
+    public ResponseEntity<tech.one.place.model.User> getUserDetails(@PathVariable("UserID") int userID) {
 
 
+        tech.one.place.model.User user = userService.getUserInfo(userID);
+
+            System.out.println(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+    }
+    @DeleteMapping ("/{userID}")
+    public ResponseEntity<String> deleteUserDetails(@PathVariable("userID") int userID){
+
+            this.userService.DeleteUserInfo(userID);
 
 
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("user", newuser);
-        response.put("message", "User Updated Successfully");
+            return new ResponseEntity<>("User Deleted Successfully", HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
-        //convert string to date
 
-    }}
+    }
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUserDetails() {
+
+
+
+            List<User> users = userService.getALLUserInfo();
+
+            return ResponseEntity.ok(users);
+
+
+
+
+    }
+
+
+
+}
+

@@ -64,16 +64,20 @@ public class UserService {
 
         return registeredUser;
     }
-    public User UpdateUserInfo(long userID , User user){
-        User existingUser = userRepo.findById(userID).get() ;
-
-        existingUser.setEmail(user.getEmail());
-        existingUser.setType(user.getType());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        return userRepo.save(existingUser) ;
+    
+    public User getUserInfo(long userID){
+        return userRepo.findById(userID).orElse(null);
     }
+    public User DeleteUserInfo(long userId){
+        User user = userRepo.findById(userId).get();
+        userRepo.delete(user);
+        return user;
+    }
+    public List<User> getALLUserInfo(){return userRepo.findAll();}
+    public User updateUserInfo(User user) {
+        return userRepo.save(user);
+    }
+
 
 
 }
