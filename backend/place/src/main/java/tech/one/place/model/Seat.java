@@ -11,7 +11,7 @@ public class Seat implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private long id;
-    private String status;
+    private String status="free";
     @Column(unique = true)
     private long idRoom;
 }

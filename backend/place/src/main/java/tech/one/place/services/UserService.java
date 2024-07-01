@@ -64,7 +64,7 @@ public class UserService {
 
         return registeredUser;
     }
-    
+
     public User getUserInfo(long userID){
         return userRepo.findById(userID).orElse(null);
     }
