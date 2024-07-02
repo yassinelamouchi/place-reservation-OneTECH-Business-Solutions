@@ -54,6 +54,24 @@ public class RoomService {
 
         return registeredRoom;
     }
+    public List<Room> getAllRooms(){return roomRepo.findAll();}
+    public Room getRoomInfo(long Id){
+        return roomRepo.findById(Id).orElse(null);
+    }
+    public Room deleteRoom(long Id){
+        Room room = roomRepo.findById(Id).get();
+        roomRepo.delete(room);
+        return room;
+
+    }
+    public Room updateRoom(long Id, Room room){
+        Room exroom = roomRepo.findById(Id).get();
+        exroom.setStatus(room.getStatus());
+        exroom.setCapacity(room.getCapacity());
+        return roomRepo.save(exroom);
+
+
+    }
 
 
 
