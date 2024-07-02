@@ -13,7 +13,7 @@ public class Room implements Serializable{
     private long id;
     private int capacity;
     private String status;
-    private long idPlace;
+
 
 
 }

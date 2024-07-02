@@ -56,6 +56,17 @@ public class SeatService {
         return seatRepo.findById(seatID).orElse(null);
     }
     public List<Seat> getALLSeatInfo(){return seatRepo.findAll();}
+    public Seat DeleteSeatInfo(long seatId){
+        Seat seat = seatRepo.findById(seatId).get();
+        seatRepo.delete(seat);
+        return seat;
+    }
+    public Seat updateSeat(long seatID, Seat seat){
+        Seat existingSeat = seatRepo.findById(seatID).orElse(null);
+        existingSeat.setStatus(seat.getStatus());
+        existingSeat.setIdRoom(seat.getIdRoom());
+        return seatRepo.save(existingSeat);
+    }
 
 
 }

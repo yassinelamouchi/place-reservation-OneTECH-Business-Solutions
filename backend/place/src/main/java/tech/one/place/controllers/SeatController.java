@@ -76,4 +76,26 @@ public class SeatController {
 
 
     }
+    @DeleteMapping ("/{seatID}")
+    public ResponseEntity<String> deleteSeatDetails(@PathVariable("seatID") int seatID){
+
+        this.seatService.DeleteSeatInfo(seatID);
+
+
+        return new ResponseEntity<>("seat Deleted Successfully", HttpStatus.NO_CONTENT);
+
+
+
+
+    }
+
+
+    @PutMapping("/{seatID}")
+    public ResponseEntity<Object> updateSeat(@RequestBody @Valid Seat seat, @PathVariable("seatID") int seatID){
+            this.seatService.updateSeat(seatID, seat);
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("message", "Seat updated successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
 }
