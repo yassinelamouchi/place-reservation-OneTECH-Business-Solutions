@@ -74,16 +74,16 @@ public class UserService {
         return user;
     }
     public List<User> getALLUserInfo(){return userRepo.findAll();}
-    public User updateUserInfo(User user,long Id) {
-        User existingUser = userRepo.findById(Id).orElse(null);
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
+    public User updateUserInfo(User user, long id) {
+       User exuser = userRepo.findById(id).get();
 
-        existingUser.setPassword(user.getPassword());
-        existingUser.setType(user.getType());
-        existingUser.setVerified(user.isVerified());
-        return userRepo.save(existingUser);
+        exuser.setFirstName(user.getFirstName());
+        exuser.setLastName(user.getLastName());
+        exuser.setType(user.getType());
+        exuser.setPassword(user.getPassword());
+        exuser.setEmail(user.getEmail());
 
+        return userRepo.save(exuser);
     }
 
 
