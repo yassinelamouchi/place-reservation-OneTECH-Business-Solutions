@@ -82,6 +82,7 @@ public class UserService {
         exuser.setType(user.getType());
         exuser.setPassword(user.getPassword());
         exuser.setEmail(user.getEmail());
+        exuser.setVerified(user.isVerified());
 
         return userRepo.save(exuser);
     }
