@@ -11,7 +11,7 @@ public class Room implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private long id;
-    private int capacity;
+    private int capacity=18;
     private String status;
 
 
