@@ -22,15 +22,16 @@ public class ReservationService {
             throw new IllegalArgumentException("Room already exists");
         }
 
-        Room room = new Room();
+        Reservation reservation = new Reservation();
 
-        room.setStatus(registerRoom.getStatus());
-        room.setCapacity(registerRoom.getCapacity());
-        Room registeredRoom = roomRepo.save(room);
+        reservation.setDate(res.getDate());
+        reservation.setIdSeat(res.getIdSeat());
+        reservation.setIdUser(res.getIdUser());
+        Reservation registeredReservation = reservationRepo.save(reservation);
 
 
 
 
-        return registeredRoom;
+        return registeredReservation;
     }
 }
