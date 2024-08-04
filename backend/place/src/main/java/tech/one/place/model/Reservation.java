@@ -19,4 +19,5 @@ public class Reservation implements Serializable {
     private long idUser;
 
     private Date date;
+
 }

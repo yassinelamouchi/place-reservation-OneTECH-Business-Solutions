@@ -19,4 +19,7 @@ public class User implements Serializable {
     private String password;
     private String type;
     private boolean verified;
+    public String getEmail() {
+        return email;
+    }
 }

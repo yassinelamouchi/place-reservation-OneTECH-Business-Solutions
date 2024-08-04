@@ -3,16 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { SeatListComponent } from './pages/seat-list/seat-list.component';
-import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SeatsComponent } from './pages/seats/seats.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
-    SeatListComponent,
-    AdminPageComponent
+    LoginComponent,
+    SeatsComponent
   ],
   imports: [
     BrowserModule,

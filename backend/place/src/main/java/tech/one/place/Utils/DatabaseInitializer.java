@@ -30,9 +30,11 @@ public class DatabaseInitializer implements CommandLineRunner  {
 
     public void userSetup(){
         User user = new User();
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmail("gg");
+        user.setFirstName("admin");
+        user.setLastName("admin");
+        user.setEmail("admin@admin.com");
+        user.setPassword("admin");
+        user.setType("admin");
         userRepo.save(user);
     }
 }
