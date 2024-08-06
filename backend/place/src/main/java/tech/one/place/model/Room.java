@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public class Room implements Serializable{
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
     private int capacity=18;
     private String status;

@@ -18,8 +18,9 @@ public class SeatService {
             throw new IllegalArgumentException("Seat already exists");
         }
         Seat seat = new Seat();
-        seat.setStatus(registerSeat.getStatus());
-        seat.setIdRoom(registerSeat.getIdRoom());
+        seat.setName(registerSeat.getName());
+        seat.setReference(registerSeat.getReference());
+        seat.setRoom(registerSeat.getRoom());
         Seat registeredSeat = seatRepo.save(seat);
         return registeredSeat;
     }
@@ -34,8 +35,9 @@ public class SeatService {
     }
     public Seat updateSeat(long seatID, Seat seat){
         Seat existingSeat = seatRepo.findById(seatID).orElse(null);
-        existingSeat.setStatus(seat.getStatus());
-        existingSeat.setIdRoom(seat.getIdRoom());
+        existingSeat.setName(seat.getName());
+        existingSeat.setReference(seat.getReference());
+        existingSeat.setRoom(seat.getRoom());
         return seatRepo.save(existingSeat);
     }
 

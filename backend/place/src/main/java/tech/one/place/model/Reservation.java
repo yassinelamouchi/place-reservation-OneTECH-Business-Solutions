@@ -12,11 +12,17 @@ import java.util.Date;
 
 public class Reservation implements Serializable {
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
-    private long idSeat;
 
-    private long idUser;
+    @ManyToOne
+    @JoinColumn(name = "idSeat")
+    private Seat seat;
+
+    @ManyToOne
+    @JoinColumn(name = "idUser")
+    private User user;
+
 
     private Date date;
 

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 @RestController
 @RequestMapping("/api/reservation")
@@ -37,5 +39,13 @@ public class ReservationController {
     public ResponseEntity<Object> deleteReservation(@PathVariable("resId") int Id){
         Reservation res = resService.deleteReservation(Id);
         return ResponseEntity.ok(res);
+    }
+
+
+    //find by date
+    @GetMapping("/date/{date}")
+    public ResponseEntity<List<Reservation>> getAllReservationsByDate(@PathVariable("date") String date){
+        List<Reservation> reservations = resService.findAllByDate(date);
+        return ResponseEntity.ok(reservations);
     }
 }

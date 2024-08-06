@@ -1,4 +1,5 @@
 package tech.one.place.services;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tech.one.place.model.User;
 import tech.one.place.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,14 @@ public class UserService {
 
         User user = new User();
 
-        user.setPassword(registerUser.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(registerUser.getPassword()));
         user.setFirstName(registerUser.getFirstName());
         user.setLastName(registerUser.getLastName());
         user.setEmail(registerUser.getEmail());
         user.setType(registerUser.getType());
 
-        user.setVerified(false);
-
+        user.setVerified(registerUser.isVerified());
 
 
         User registeredUser = userRepo.save(user);
@@ -59,6 +60,20 @@ public class UserService {
         exuser.setEmail(user.getEmail());
         exuser.setVerified(user.isVerified());
         return userRepo.save(exuser);
+    }
+
+
+    public User login(User user){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User registeredUser = userRepo.findByEmail(user.getEmail());
+        if(registeredUser != null){
+            if(encoder.matches(user.getPassword(), registeredUser.getPassword())){
+                return registeredUser;
+            }else{
+                throw new IllegalArgumentException("Invalid Password");
+            }
+        }
+        throw new IllegalArgumentException("User not found");
     }
 
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 public class User implements Serializable {
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
     private String firstName;
@@ -20,6 +20,7 @@ public class User implements Serializable {
     private String type;
     private boolean verified;
     public String getEmail() {
+
         return email;
     }
 }

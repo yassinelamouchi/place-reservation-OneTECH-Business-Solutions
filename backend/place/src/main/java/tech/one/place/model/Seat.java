@@ -9,9 +9,14 @@ import java.io.Serializable;
 
 public class Seat implements Serializable{
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
-    private String status="free";
 
-    private long idRoom;
+    private String name;
+
+    private String reference;
+
+    @ManyToOne
+    @JoinColumn(name = "idRoom")
+    private Room room;
 }

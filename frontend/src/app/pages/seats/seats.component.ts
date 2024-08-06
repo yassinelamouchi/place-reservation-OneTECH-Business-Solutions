@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { SeatService } from 'src/app/services/seat.service';
 
 @Component({
   selector: 'app-seats',
@@ -8,22 +11,83 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SeatsComponent {
 
-  //get current date from url
   date = this.route.snapshot.paramMap.get('date');
-  index:number = -1;
+  selectedSeat: any = {};
+  user : any = JSON.parse(localStorage.getItem('user') || '{}');
+  display: boolean = false;
+  seats: any[] = [];
+  reservations: any[] = [];
+ 
   
-  currentDate = new Date();
+  currentDate = this.date ? new Date(this.date) : new Date();
 
-  constructor(private route: ActivatedRoute) { 
-
+  constructor(
+    private route: ActivatedRoute , 
+    private seatService : SeatService , 
+    private reservationService : ReservationService,
+    private messageService: MessageService
+  ){
+    this.getSeats();
+    this.getReservations();
   }
-  
-  range = (num: number) => {
-    return new Array(num).fill(0).map((_, i) => i);
+
+  getSeats = () => {
+    this.seatService.getSeats().subscribe((data: any) => {
+      this.seats = data;
+    });
+  } 
+
+  getReservations = () => {
+    this.reservationService.getReservationByDate(this.date).subscribe((data: any) => {
+      this.reservations = data;
+
+      // Mark reserved seats as reserved
+      this.seats.forEach((seat: any) => {
+        seat.reserved = false;
+        this.reservations.forEach((reservation: any) => {
+          if (seat.id === reservation.seat.id) {
+            seat.reserved = true;
+            seat.reservedBy = reservation.user.firstName + ' ' + reservation.user.lastName;
+          }
+        });
+      });
+    });
   }
 
-  onSeatClick(index: number) {
-    this.index = index;
+
+  logout(){
+    localStorage.clear();
+    window.location.reload();
+  }
+
+
+  onSeatClick(seat:any){
+    this.selectedSeat = seat;
+    this.display = true;
+  }
+
+  reserveSeat() {
+    const reservation = {
+     seat : {
+        id : this.selectedSeat.id
+      },
+      user : {
+        id : this.user.id
+      },
+      date : this.date
+     }
+
+    this.reservationService.createReservation(reservation).subscribe((res: any) => {
+      this.display = false;
+      this.getSeats();
+      this.getReservations();
+      this.selectedSeat = {};
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Seat reserved successfully' });
+    }, (error: any) => {
+      this.display = false;
+      this.selectedSeat = {};
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.errors[0] });
+    });
   }
 
 }
